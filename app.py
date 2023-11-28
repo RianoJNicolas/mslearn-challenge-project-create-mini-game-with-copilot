@@ -80,34 +80,28 @@ def checkWin(p1Object, p2Object, p1Name, p2Name):
 # Function to count the number of wins for each player
 def playerWin(p1Object, p2Object, player1, player2, count1, count2):
     # if the user wins
-    while count1 < 3 and count2 < 3:
-        if checkWin(p1Object, p2Object, player1, player2) == player1:
-            print(player1 + " wins!")
-            count1 += 1
-        # if the computer wins
-        elif checkWin(p1Object, p2Object, player1, player2) == player2:
-            print(player2 + " wins!")
-            count2 += 1
-        # if it's a tie
-        else:
-            print("It's a tie!")
-        print("The score is: " + player1 + ": " + str(count1) + " - " + player2 + ": " + str(count2))
-        if count1 == 3:
-            print(player1 + " wins the game!")
-        elif count2 == 3:
-            print(player2 + " wins the game!")
-        else:
-            print("Let's play again!")
-    
+    if checkWin(p1Object, p2Object, player1, player2) == player1:
+        print(player1 + " wins!")
+        count1 = count1 + 1
+    # if the computer wins
+    elif checkWin(p1Object, p2Object, player1, player2) == player2:
+        print(player2 + " wins!")
+        count2 = count2 + 1
+    # if it's a tie
+    else:
+        print("It's a tie!")
+
+    print("The score is: " + player1 + ": " + str(count1) + " - " + player2 + ": " + str(count2))
+    return count1, count2
 
 # function to run the game
 def run():
     mode, p1Name, p2Name, start = intro()
     count1 = 0
     count2 = 0
-    while True:
-        if mode == "1":
-            p1Name = "Computer"
+    if mode == "1":
+        while True:
+            p1Name = "Machine"
             p2Name = "You"
             p2Object = askUserInput()
             if p2Object == 'exit':
@@ -115,9 +109,19 @@ def run():
             p1Object = getComputerInput()
             print(f'{p1Name} chose: {p1Object}')
             print(f'{p2Name} chose: {p2Object}')
-            playerWin(p2Object, p1Object, p1Name, p2Name, count1, count2)
-        
-        elif mode == "2":
+            count1, count2 = playerWin(p1Object, p2Object, p1Name, p2Name, count1, count2)
+            # if one of the players wins 3 times
+            if count1 == 3:
+                print(p1Name + " wins the game!")
+                break
+            elif count2 == 3:
+                print(p2Name + " wins the game!")
+                break
+            else:
+                print("Let's play again!")
+    
+    elif mode == "2":
+        while True:
             if start == p1Name:
                 userObject = askUserInput()
                 if userObject.lower() == 'exit':
@@ -134,8 +138,8 @@ def run():
                     break
                 print("You chose: " + userObject)
                 playerWin(userObject, computerObject, p1Name, p2Name, count1, count2)
-        else:
-            print("Please enter the correct input")
+    else:
+        print("Please enter the correct input")
 
 
 # code block if main
