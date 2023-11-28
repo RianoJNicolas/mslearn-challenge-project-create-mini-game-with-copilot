@@ -123,21 +123,35 @@ def run():
     elif mode == "2":
         while True:
             if start == p1Name:
-                userObject = askUserInput()
-                if userObject.lower() == 'exit':
+                print(f"{p1Name} turn")
+                p1Object = askUserInput()
+                print(f"{p2Name} turn")
+                p2Object = askUserInput()
+                if (p1Object.lower() == 'exit') or (p2Object.lower() == 'exit'):
                     break
-                computerObject = getComputerInput()
-                print("The computer chose: " + computerObject)
-                print("You chose: " + userObject)
-                playerWin(userObject, computerObject, p1Name, p2Name, count1, count2)
+                print(f"{p1Name} chose: " + p1Object)
+                print(f"{p2Name} chose: " + p2Object)
+                count1, count2 = playerWin(p1Object, p2Object, p1Name, p2Name, count1, count2)
             else:
-                computerObject = getComputerInput()
-                print("The computer chose: " + computerObject)
-                userObject = askUserInput()
-                if userObject.lower() == 'exit':
+                print(f"{p2Name} turn")
+                p2Object = askUserInput()
+                print(f"{p1Name} turn")
+                p1Object = askUserInput()
+                if (p1Object.lower() == 'exit') or (p2Object.lower() == 'exit'):
                     break
-                print("You chose: " + userObject)
-                playerWin(userObject, computerObject, p1Name, p2Name, count1, count2)
+                print(f"{p2Name} chose: " + p2Object)
+                print(f"{p1Name} chose: " + p1Object)
+                count1, count2 = playerWin(p1Object, p2Object, p1Name, p2Name, count1, count2)
+            
+            # if one of the players wins 3 times
+            if count1 == 3:
+                print(p1Name + " wins the game!")
+                break
+            elif count2 == 3:
+                print(p2Name + " wins the game!")
+                break
+            else:
+                print("Let's play again!")
     else:
         print("Please enter the correct input")
 
